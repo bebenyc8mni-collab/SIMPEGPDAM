@@ -73,8 +73,8 @@ const LoginPage: React.FC = () => {
         <div className="min-h-screen bg-gray-50 flex flex-col justify-center items-center py-12 sm:px-6 lg:px-8 bg-water-pattern">
             <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
                  <Link to="/" className="text-3xl font-bold text-brand-blue-800 flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-10 h-10 mr-2">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-10 w-10 mr-3 text-brand-blue-600">
+                        <path d="M12 21.75c-4.28 0-8.22-3.44-8.22-7.72C3.78 9.75 12 2.25 12 2.25s8.22 7.5 8.22 11.78c0 4.28-3.94 7.72-8.22 7.72z" />
                     </svg>
                     SIMPEGPDAM
                 </Link>
