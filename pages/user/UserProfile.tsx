@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { useDatabase } from '../../services/database';
@@ -20,8 +19,9 @@ const UserProfile: React.FC = () => {
 
     // Fix: Pass employeeId directly as a prop to the refactored DetailPegawai component,
     // resolving the original type error from React.cloneElement.
+    // Pass readOnly prop to prevent users from editing their own profile data.
     return (
-        <DetailPegawai employeeId={employeeData.id} />
+        <DetailPegawai employeeId={employeeData.id} readOnly />
     );
 };
 

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDatabase } from '../../../services/database';
@@ -10,9 +9,10 @@ import Modal from '../../../components/ui/Modal';
 // Fix: Define component props to accept an optional employeeId for reusability.
 interface DetailPegawaiProps {
     employeeId?: string;
+    readOnly?: boolean;
 }
 
-const DetailPegawai: React.FC<DetailPegawaiProps> = ({ employeeId }) => {
+const DetailPegawai: React.FC<DetailPegawaiProps> = ({ employeeId, readOnly = false }) => {
     const params = useParams<{ id: string }>();
     const { db, updateDb } = useDatabase();
     const [activeTab, setActiveTab] = useState('profil');
@@ -359,6 +359,7 @@ const DetailPegawai: React.FC<DetailPegawaiProps> = ({ employeeId }) => {
                                         onAdd={handleOpenAddEducationModal}
                                         onEdit={handleOpenEditEducationModal}
                                         onDelete={handleOpenDeleteConfirm}
+                                        readOnly={readOnly}
                                       />;
             case 'pekerjaan': return <HistoryTab 
                                         title="Riwayat Pekerjaan" 
@@ -368,6 +369,7 @@ const DetailPegawai: React.FC<DetailPegawaiProps> = ({ employeeId }) => {
                                         onAdd={handleOpenAddWorkHistoryModal}
                                         onEdit={handleOpenEditWorkHistoryModal}
                                         onDelete={handleOpenDeleteWorkHistoryConfirm}
+                                        readOnly={readOnly}
                                       />;
             case 'kepangkatan': return <HistoryTab 
                                         title="Riwayat Kepangkatan" 
@@ -377,6 +379,7 @@ const DetailPegawai: React.FC<DetailPegawaiProps> = ({ employeeId }) => {
                                         onAdd={handleOpenAddRankHistoryModal}
                                         onEdit={handleOpenEditRankHistoryModal}
                                         onDelete={handleOpenDeleteRankHistoryConfirm}
+                                        readOnly={readOnly}
                                       />;
             case 'karir': return <HistoryTab 
                                     title="Riwayat Karir" 
@@ -386,6 +389,7 @@ const DetailPegawai: React.FC<DetailPegawaiProps> = ({ employeeId }) => {
                                     onAdd={handleOpenAddCareerHistoryModal}
                                     onEdit={handleOpenEditCareerHistoryModal}
                                     onDelete={handleOpenDeleteCareerHistoryConfirm}
+                                    readOnly={readOnly}
                                   />;
             case 'dokumen': return <HistoryTab 
                                         title="Dokumen" 
@@ -394,6 +398,7 @@ const DetailPegawai: React.FC<DetailPegawaiProps> = ({ employeeId }) => {
                                         dataKeys={['name', 'notes']}
                                         onAdd={handleOpenAddDocumentModal}
                                         onDelete={handleOpenDeleteDocumentConfirm}
+                                        readOnly={readOnly}
                                      />;
             default: return null;
         }
@@ -601,19 +606,20 @@ const HistoryTab: React.FC<{
     onAdd?: () => void;
     onEdit?: (item: any) => void;
     onDelete?: (item: any) => void;
-}> = ({title, data, columns, dataKeys, onAdd, onEdit, onDelete}) => {
+    readOnly?: boolean;
+}> = ({title, data, columns, dataKeys, onAdd, onEdit, onDelete, readOnly = false}) => {
     return (
         <Card>
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-semibold">{title}</h2>
-                {onAdd && <Button onClick={onAdd}>+ Tambah Data</Button>}
+                {!readOnly && onAdd && <Button onClick={onAdd}>+ Tambah Data</Button>}
             </div>
             <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
                         <tr>
                             {columns.map(col => <th key={col} className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{col}</th>)}
-                            {(onAdd || onEdit || onDelete) && <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>}
+                            {!readOnly && (onAdd || onEdit || onDelete) && <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>}
                         </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
@@ -651,7 +657,7 @@ const HistoryTab: React.FC<{
                                     }
                                     return (<td key={i} className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{value}</td>);
                                 })}
-                                {(onAdd || onEdit || onDelete) && (
+                                {!readOnly && (onAdd || onEdit || onDelete) && (
                                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         {title === 'Dokumen' ? (
                                             <>
@@ -668,7 +674,7 @@ const HistoryTab: React.FC<{
                                 )}
                             </tr>
                         )) : (
-                            <tr><td colSpan={columns.length + ((onAdd || onEdit || onDelete) ? 1 : 0)} className="text-center py-10 text-gray-500">Tidak ada data.</td></tr>
+                            <tr><td colSpan={columns.length + (!readOnly && (onAdd || onEdit || onDelete) ? 1 : 0)} className="text-center py-10 text-gray-500">Tidak ada data.</td></tr>
                         )}
                     </tbody>
                 </table>
