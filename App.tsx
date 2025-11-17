@@ -18,6 +18,7 @@ import PlaceholderPage from './pages/PlaceholderPage';
 import UserLayout from './layouts/UserLayout';
 import UserDashboard from './pages/user/UserDashboard';
 import UserProfile from './pages/user/UserProfile';
+import Presensi from './pages/admin/Presensi';
 
 const ProtectedRoute: React.FC<{ allowedRoles: string[] }> = ({ allowedRoles }) => {
   const { user, role } = useAuth();
@@ -51,7 +52,7 @@ function App() {
             <Route path="data-unit" element={<DataUnit />} />
             <Route path="data-pangkat" element={<DataPangkat />} />
             <Route path="struktur-organisasi" element={<StrukturOrganisasi />} />
-            <Route path="presensi" element={<PlaceholderPage title="Presensi" />} />
+            <Route path="presensi" element={<Presensi />} />
             <Route path="cuti" element={<PlaceholderPage title="Cuti" />} />
             <Route path="payroll" element={<PlaceholderPage title="Payroll" />} />
             <Route path="user-login" element={<UserLogin />} />

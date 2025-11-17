@@ -113,11 +113,13 @@ export interface CutiRequest {
     status: 'Pending' | 'Approved' | 'Rejected';
 }
 
+export type PresenceStatus = 'Hadir' | 'Sakit' | 'Izin' | 'Alpha' | 'Cuti';
+
 export interface Presence {
     id: string;
     employeeId: string;
-    date: string;
-    status: 'Hadir' | 'Sakit' | 'Izin' | 'Alpha';
+    date: string; // YYYY-MM-DD
+    status: PresenceStatus;
 }
 
 // Global window declarations
